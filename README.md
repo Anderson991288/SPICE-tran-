@@ -30,3 +30,36 @@ plot v(1) v(2)
 
 ![Screenshot from 2022-07-07 16-21-33](https://user-images.githubusercontent.com/68816726/177727378-f7367e15-e713-4a7f-8938-cebaea5915fc.png)
 
+# 具有濾波電容的峰值整流器電路
+
+![Screenshot from 2022-07-07 16-29-07](https://user-images.githubusercontent.com/68816726/177728688-17b8b541-430a-46bd-9922-422644fab609.png)
+
+netlist:
+```
+A Peak Rectifier
+
+* circuit description (1mA diode)
+Vi 1 0 SIN (0V 10 60Hz)
+R1 2 0 1k
+C1 2 0 1mF
+*diode model descriotion
+D1 1 2 1mA_diode
+.model 1mA_diode D (Is=0.01pA n=1.0675)
+.end
+```
+
+ngspice:
+```
+ngspice PeakRectifier.cir
+
+tran 0.01ms 60ms 0ms 0.01ms
+plot v(2) v(1)
+plot v(2)
+```
+
+![Screenshot from 2022-07-07 16-28-48](https://user-images.githubusercontent.com/68816726/177729007-68d78097-58df-45f7-9b1b-26b3824067c6.png)
+
+
+
+
+
