@@ -59,6 +59,37 @@ plot v(2)
 
 ![Screenshot from 2022-07-07 16-28-48](https://user-images.githubusercontent.com/68816726/177729007-68d78097-58df-45f7-9b1b-26b3824067c6.png)
 
+# BJT 放大器單級放大器
+
+![Screenshot from 2022-07-07 16-46-15](https://user-images.githubusercontent.com/68816726/177732174-a30fc6d2-0da2-4934-896b-61ae976ce2ac.png)
+
+netlist:
+```
+A Single-Stage Amplifier Circuit
+* circuit description
+Vcc 1 0 DC +10V
+Vbb 5 0 DC +3V
+Vi 4 5 SIN (0V 1 60Hz)
+Rc 1 2 2k
+Rbb 4 3 100k
+* model description *
+Q1 2 3 0 npn_transistor
+.model npn_transistor npn (Is=1.8e-15 Bf=100)
+.end
+```
+ngspice:
+```
+ngspice BJTSingle-StageAmplifier.cir
+
+tran 0.01ms 60ms 0ms 0.01ms
+plot v(4)-v(5) v(2)
+```
+
+![Screenshot from 2022-07-07 16-47-06](https://user-images.githubusercontent.com/68816726/177732417-01a86104-3289-4891-81a0-da0f43d46b40.png)
+
+
+
+
 
 
 
