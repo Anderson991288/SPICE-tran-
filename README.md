@@ -118,5 +118,71 @@ plot -v(1)/i(vi)
 
 ![Screenshot from 2022-07-07 21-15-58](https://user-images.githubusercontent.com/68816726/177783243-da9056ca-b806-4cc5-90ea-48bd7254c737.png)
 
+# 訊號傳輸
+
+## NMOS CMOS
+
+### NMOS switch:
+![Screenshot from 2022-07-07 21-27-12](https://user-images.githubusercontent.com/68816726/177785374-b1e73c87-4276-4362-b483-c72ba3c64857.png)
+netlist:
+```
+Signal Transmission through a NMOS Switch
+* circuit description
+Vg 2 0 DC 5V
+Vb 3 0 DC -5V
+Vi 1 0 SIN(0V 5V 100Hz)
+Rl 6 0 100k
+* MOSFET model description
+M1 1 2 6 3 e_nmosfet L=10u W=400u
+.model e_nmosfet nmos (KP=20u Vto=2V lambda=0.02 gamma=0.5)
+.end
+```
+ngspice:
+```
+ngspice TransmissionNMOS.cir
+
+tran 0.01ms 20ms 0ms 0.01ms
+plot v(1) v(6)
+```
+
+![Screenshot from 2022-07-07 21-28-39](https://user-images.githubusercontent.com/68816726/177785776-2de4b612-6726-4820-8ce5-b6fcf1b82bba.png)
+
+*紅線為輸入波形,藍線為輸出波形*
+
+### CMOS switch:
+
+![Screenshot from 2022-07-07 21-31-34](https://user-images.githubusercontent.com/68816726/177785964-9a6d4867-730d-40ac-b996-91f4199bd285.png)
+
+netlist:
+```
+On-Resistance of an CMOS Switch
+* circuit description
+Vgn 2 0 DC 5V
+Vbn 3 0 DC -5V
+Vgp 5 0 DC -5V
+Vbp 4 0 DC 5V
+Vi 1 0 SIN(0V 5V 100Hz)
+Rl 6 0 1k
+* MOSFET model description
+M1 1 2 6 3 e_nmosfet L=10u W=400u
+M2 1 5 6 4 e_pmosfet L=10u W=400u
+.model e_nmosfet nmos (KP=20u Vto=2V lambda=0.02 gamma=0.5)
+.model e_pmosfet pmos (KP=20u Vto=-2V lambda=0.02 gamma=0.5)
+.end
+```
+ngspice:
+```
+ngspice TransmissionCMOS.cir
+
+tran 0.1ms 20ms 0ms 0.1ms
+plot v(6)
+```
+
+![Screenshot from 2022-07-07 22-01-31](https://user-images.githubusercontent.com/68816726/177792700-131d4ba4-b943-4b46-bd99-807fbe95a274.png)
+
+*可見CMOS輸出波形與輸入正弦波形幾乎一致，代表訊號傳輸幾乎無失真*
+
+
+
 
 
