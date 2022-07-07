@@ -182,7 +182,37 @@ plot v(6)
 
 *可見CMOS輸出波形與輸入正弦波形幾乎一致，代表訊號傳輸幾乎無失真*
 
+# 步階響應
+  將 MOS 開關之接收端連接負載電阻和電容，為觀察CMOS開關步階響應輸入步階波形
+## CMOS:
+![Screenshot from 2022-07-07 22-26-26](https://user-images.githubusercontent.com/68816726/177797891-4a204560-86df-4d7f-aa84-ab11ff25b5bd.png)
 
+netlist:
+```
+Step Response of a CMOS Switch
+* circuit description (RL=100k)
+Vgn 2 0 DC 5V
+Vbn 3 0 DC -5V
+Vgp 5 0 DC -5V
+Vbp 4 0 DC 5V
+Vi 1 0 PWL (0 0V 10ns 0V 20ns 5V 50ns 5V)
+Rl 6 0 100k
+Cl 6 0 1pF
+* MOSFET model description
+M1 1 2 6 3 e_nmosfet L=10u W=400u
+M2 1 5 6 4 e_pmosfet L=10u W=400u
+.model e_nmosfet nmos (KP=20u Vto=2V lambda=0.02 gamma=0.5)
+.model e_pmosfet pmos (KP=20u Vto=-2V lambda=0.02 gamma=0.5)
+.end
+```
+ngspice:
+```
+ngspice StepResponseCMOSSW.cir
 
+tran 0.01ns 50ns 0ms 0.01ns
+plot v(6)+v(1)
+```
+
+![Screenshot from 2022-07-07 22-25-56](https://user-images.githubusercontent.com/68816726/177798194-34ce468b-1aee-4ffa-a138-b9467a003566.png)
 
 
