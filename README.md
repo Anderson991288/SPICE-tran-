@@ -88,9 +88,35 @@ plot v(4)-v(5) v(2)
 ![Screenshot from 2022-07-07 16-47-06](https://user-images.githubusercontent.com/68816726/177732417-01a86104-3289-4891-81a0-da0f43d46b40.png)
 
 
+# CMOS 開關
 
+![Screenshot from 2022-07-07 21-16-26](https://user-images.githubusercontent.com/68816726/177782933-1d65eeb4-c8e7-42c5-b1f4-7976a025cb41.png)
 
+netlist:
+```
+On-Resistance of an CMOS Switch
+* circuit description
+Vgn 2 0 DC 5V
+Vbn 3 0 DC -5V
+Vgp 5 0 DC -5V
+Vbp 4 0 DC 5V
+Vi 1 0 DC 0V
+* MOSFET model description
+M1 1 2 0 3 e_nmosfet L=10u W=400u
+M2 1 5 0 4 e_pmosfet L=10u W=400u
+.model e_nmosfet nmos (KP=20u Vto=2V lambda=0.02 gamma=0.5)
+.model e_pmosfet pmos (KP=20u Vto=-2V lambda=0.02 gamma=0.5)
+.end
+```
+ngspice:
+```
+ngspice CMOSSwitch.cir
 
+dc vi -5 5 10.001m
+plot -v(1)/i(vi)
+```
+
+![Screenshot from 2022-07-07 21-15-58](https://user-images.githubusercontent.com/68816726/177783243-da9056ca-b806-4cc5-90ea-48bd7254c737.png)
 
 
 
