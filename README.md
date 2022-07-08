@@ -215,4 +215,32 @@ plot v(6)+v(1)
 
 ![Screenshot from 2022-07-07 22-25-56](https://user-images.githubusercontent.com/68816726/177798194-34ce468b-1aee-4ffa-a138-b9467a003566.png)
 
+# 米勒積分器
+![Screenshot from 2022-07-08 22-29-23](https://user-images.githubusercontent.com/68816726/178012485-842fa508-e079-4bf4-aad3-9465608149e1.png)
+
+netlist:
+```
+The Miller Integrator
+* circuit description *
+Vi 1 0 PWL (0 0V 1ms 0V 1.001ms 1V 10ms 1V)
+R1 1 2 1k
+C1 2 3 20uF
+Eopamp 3 0 0 2 1e7
+```
+
+ngspice:
+```
+ngspice MillerIntegrator.cir
+
+tran 10us 5ms 0ms 10us
+plot v(1)
+plot v(3)
+```
+### input:
+![Screenshot from 2022-07-08 22-28-36](https://user-images.githubusercontent.com/68816726/178012814-f8176b43-8b31-4950-aa6c-7f97b3d85dfe.png)
+
+### output:
+![Screenshot from 2022-07-08 22-28-44](https://user-images.githubusercontent.com/68816726/178012930-19fc0fee-3963-463c-bc9f-0d403d7eecba.png)
+
+
 
